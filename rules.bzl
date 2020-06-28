@@ -5,11 +5,17 @@ def _producer_impl(ctx):
     output_depset = depset([ctx.outputs.out])
     my_provider = NumberInfo(number = 13)
 
+    providers = [DefaultInfo(files = output_depset)]
+    providers.append(my_provider)
+
     # This works.
     # return [DefaultInfo(files = output_depset), my_provider]
 
     # This does not work
-    return [DefaultInfo(files = output_depset)].append(my_provider)
+    # return [DefaultInfo(files = output_depset)].append(my_provider)
+
+    # This works again!
+    return providers
 
 producer = rule(
     implementation = _producer_impl,
